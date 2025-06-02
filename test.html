@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Singamsetti Poorna Mani Teja - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Rubik:wght@700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            scroll-behavior: smooth;
+            background-color: #000;
+            background: radial-gradient(circle at 20% 20%, #a14de0, transparent 150px), 
+                        radial-gradient(circle at 80% 40%, #3a5edb, transparent 150px), 
+                        radial-gradient(circle at 10% 90%, #0f2a3a, transparent 200px), 
+                        radial-gradient(circle at 90% 90%, #1a1a1a, #0a0a0a 400px);
+            animation: morphGradient 20s infinite ease-in-out;
+            position: relative;
+            min-height: 100vh;
+        }
+        @keyframes morphGradient {
+            0% {
+                background-position: 20% 20%, 80% 40%, 10% 90%, 90% 90%;
+            }
+            25% {
+                background-position: 30% 30%, 70% 50%, 20% 80%, 80% 80%;
+            }
+            50% {
+                background-position: 40% 40%, 60% 60%, 30% 70%, 70% 70%;
+            }
+            75% {
+                background-position: 30% 30%, 70% 50%, 20% 80%, 80% 80%;
+            }
+            100% {
+                background-position: 20% 20%, 80% 40%, 10% 90%, 90% 90%;
+            }
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            z-index: -1;
+            transition: background-position 0.5s ease;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(51, 51, 51, 0.7);
+            backdrop-filter: blur(8px);
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            position: relative;
+            color: white;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 6rem;
+            padding-top: 5rem;
+            background: transparent;
+        }
+        #section1 {
+            position: relative; /* Ensure positioning context for children */
+        }
+        #section2 {
+            padding-top: 1rem;
+        }
+        #section2 main {
+            margin-top: 0;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .font-rubik {
+            font-family: 'Rubik', sans-serif;
+        }
+        .dots {
+            background-image: radial-gradient(#3ea9f5 2px, transparent 2px);
+            background-size: 24px 24px;
+            width: 120px;
+            height: 144px;
+            position: absolute;
+            top: 3rem;
+            right: -140px;
+            z-index: -1;
+        }
+        @media (max-width: 768px) {
+            .dots {
+                display: none;
+            }
+            #section1 img, #section2 img {
+                max-width: 70vw;
+                height: auto;
+            }
+            #section1 main, #section2 main {
+                padding-top: 2rem;
+                padding-bottom: 3rem;
+            }
+            #section1 .image-container {
+                margin-bottom: 2rem; /* Ensure space for overlap on mobile */
+            }
+        }
+        .blue-underline {
+            height: 8px;
+            width: 240px;
+            background-color: #3ea9f5;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .pill-rounded {
+            border-radius: 9999px;
+        }
+        .circle-small {
+            width: 10px;
+            height: 10px;
+            border: 2px solid white;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+        .fade-slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-slide-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .fade-slide-right {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        #section1 .image-container {
+            position: relative;
+            z-index: 10; /* Ensure image is above the line */
+        }
+        #section1 img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        .bottom-line-container {
+            position: relative;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            margin-top: 1rem; /* Reduced to bring line closer to image */
+            display: flex;
+            align-items: center;
+            font-family: monospace;
+            font-size: 1.125rem;
+            letter-spacing: 0.1em;
+            color: white;
+            user-select: none;
+            font-weight: 500;
+            z-index: 5; /* Lower than image */
+        }
+        .bottom-line-container .line {
+            flex-grow: 1;
+            border-top: 1px solid white;
+            position: relative;
+            height: 1px;
+        }
+        .bottom-line-container .circle {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid white;
+            border-radius: 50%;
+            background-color: transparent;
+            position: absolute;
+            top: -0.6rem;
+            left: 0;
+        }
+        .bottom-line-container .text {
+            margin-left: auto;
+            z-index: 10;
+            padding-left: 1rem;
+        }
+        #section3 h1.year-stroke,
+        #section4 h1.year-stroke {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10;
+            -webkit-text-stroke: 1px white;
+            text-stroke: 1px white;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            font-size: 6rem;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+            margin: 0;
+            white-space: nowrap;
+        }
+        @media (min-width: 640px) {
+            #section3 h1.year-stroke,
+            #section4 h1.year-stroke {
+                font-size: 7rem;
+            }
+        }
+        @media (min-width: 768px) {
+            #section3 h1.year-stroke,
+            #section4 h1.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            #section3 h1.year-stroke,
+            #section4 h1.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            #section3 h1.year-stroke,
+            #section4 h1.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        #section3 .content-wrapper,
+        #section4 .content-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            padding-top: 8rem;
+            position: relative;
+            z-index: 20;
+        }
+        #section3 .content-wrapper > div,
+        #section4 .content-wrapper > div {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        #section3 .content-wrapper .left,
+        #section3 .content-wrapper .right,
+        #section4 .content-wrapper .left,
+        #section4 .content-wrapper .right {
+            flex: 1 1 45%;
+            min-width: 280px;
+        }
+        #section3 .content-wrapper h2,
+        #section4 .content-wrapper h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        #section3 .content-wrapper .blue-underline,
+        #section4 .content-wrapper .blue-underline {
+            height: 8px;
+            width: 192px;
+            background-color: #2ea1f7;
+            margin-bottom: 1.5rem;
+        }
+        #section3 .content-wrapper p,
+        #section4 .content-wrapper p {
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 100%;
+        }
+        #section3 .content-wrapper .right h3,
+        #section4 .content-wrapper .right h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+        #section3 .content-wrapper .right p,
+        #section4 .content-wrapper .right p {
+            font-size: 1.125rem;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+        }
+        #project-section {
+            min-height: 100vh;
+            background: transparent;
+            color: white;
+            padding: 6rem 1rem 6rem 1rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        #project-section h1.title {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #project-section .underline-blue {
+            width: 10rem;
+            height: 8px;
+            background-color: #3b82f6;
+            margin-bottom: 2rem;
+        }
+        #project-section h2.year-stroke {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10;
+            -webkit-text-stroke: 0.5px white;
+            text-stroke: 0.5px white;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            font-size: 6rem;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+            margin: 0;
+            white-space: nowrap;
+            display: flex;
+            gap: 0.1em;
+        }
+        #project-section h2.year-stroke span {
+            -webkit-text-stroke: 0.5px white;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            font-size: inherit;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+        @media (min-width: 640px) {
+            #project-section h2.year-stroke {
+                font-size: 7rem;
+            }
+        }
+        @media (min-width: 768px) {
+            #project-section h2.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            #project-section h2.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            #project-section h2.year-stroke {
+                font-size: 8rem;
+            }
+        }
+        #project-section .projects-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        #project-section .project-card {
+            max-width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #project-section .project-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        #project-section .project-card img:hover {
+            transform: scale(1.05);
+        }
+        #project-section .project-card h3 {
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        #project-section .project-card p {
+            font-size: 1rem;
+            max-width: 320px;
+            line-height: 1.4;
+        }
+        #project-section button.nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 2px solid white;
+            border-radius: 9999px;
+            width: 64px;
+            height: 64px;
+            background: transparent;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            z-index: 20;
+        }
+        #project-section button.nav-btn:hover {
+            background-color: white;
+            color: black;
+        }
+        #project-section button#prevBtn {
+            left: 0;
+        }
+        #project-section button#nextBtn {
+            right: 0;
+        }
+        @media (max-width: 1024px) {
+            #project-section .projects-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            #project-section .project-card {
+                max-width: 90vw;
+            }
+            #project-section h2.year-stroke {
+                position: static;
+                font-size: 3rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                text-align: center;
+                -webkit-text-stroke: 0.3px white;
+            }
+            #project-section button.nav-btn {
+                position: static;
+                transform: none;
+                margin: 1rem 0;
+            }
+        }
+        #get-in-touch-section {
+            padding: 4rem 1.5rem;
+            max-width: 1280px;
+        }
+        #get-in-touch-section .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+            margin-bottom: 3rem;
+        }
+        #get-in-touch-section .contact-grid > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            space-y: 1rem;
+        }
+        #get-in-touch-section .contact-footer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #get-in-touch-section .contact-footer h2 {
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            #get-in-touch-section .contact-footer h2 {
+                font-size: 1.5rem;
+                -webkit-text-stroke: 0.5px white;
+            }
+            #get-in-touch-section .contact-footer {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            #get-in-touch-section .contact-footer .w-full {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar flex items-center justify-between px-6 py-4 text-white text-sm font-semibold">
+        <ul class="flex items-center space-x-6">
+            <li><a class="bg-[#3ea9f5] px-2 py-1 font-bold tracking-widest" href="#section1">SINGAMSETTI POORNA MANI TEJA</a></li>
+            <li><a href="#section2">ABOUT ME</a></li>
+            <li><a href="#section3">EDUCATION</a></li>
+            <li><a href="#section4">EXPERIENCE</a></li>
+            <li><a href="#project-section">PROJECT</a></li>
+            <li><a href="#get-in-touch-section">CONTACT</a></li>
+        </ul>
+        <div class="flex items-center space-x-2 w-40">
+            <div class="border-t border-white flex-grow"></div>
+            <div class="circle-small"></div>
+        </div>
+    </nav>
+
+    <!-- Section 1: About Me -->
+    <div class="section" id="section1">
+        <main class="flex flex-1 flex-col md:flex-row items-center px-6 md:px-16 py-10 md:py-20 text-white">
+            <div class="flex-1 max-w-xl fade-slide-left">
+                <p class="italic text-[#3a5edb] text-[14px] mb-2">Hello !!!</p>
+                <h1 class="font-extrabold text-[40px] md:text-[48px] leading-tight text-gray-300 mb-3">
+                    I'm Singamsetti<br />Poorna Mani Teja
+                </h1>
+                <p class="bg-[#4a90e2] inline-block px-2 py-1 text-[14px] font-semibold tracking-wide mb-4">
+                    3RD YEAR B.TECH CYBERSECURITY STUDENT / ASPIRING ETHICAL HACKER
+                </p>
+                <p class="text-[14px] leading-relaxed tracking-wide text-gray-300">
+                    I am a dedicated Cybersecurity student at Anurag University with a passion for ethical hacking. I have hands-on experience in penetration testing, vulnerability assessment, and network security through internships and projects.
+                </p>
+            </div>
+            <div class="flex-1 flex justify-center md:justify-end fade-slide-right image-container">
+                <img alt="Photo of Singamsetti Poorna Mani Teja wearing Anurag University ID badge, smiling, with dark hair and beard, wearing a navy blue polo shirt" class="max-w-full h-auto rounded-md" height="auto" src="images/teja-removebg-preview.png" width="550"/>
+            </div>
+        </main>
+        <div class="bottom-line-container fade-slide-up">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </div>
+
+    <!-- Section 2: Biography -->
+    <div class="section" id="section2">
+        <main class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row items-start gap-8 md:gap-12 relative z-10">
+            <div class="relative flex-shrink-0 fade-slide-left z-10">
+                <img alt="Young man in light gray suit smiling outdoors with green plants background" class="w-[400px] h-[480px] object-cover" height="480" src="https://storage.googleapis.com/a1aa/image/f2c5ba8b-0068-453d-5b84-a8ab4706199f.jpg" width="400"/>
+                <div aria-hidden="true" class="dots"></div>
+            </div>
+            <section class="flex-1 max-w-xl fade-slide-right z-20 bg-transparent">
+                <h1 class="font-rubik text-4xl md:text-5xl font-bold leading-tight mb-2 text-white">MY BIOGRAPHY</h1>
+                <div class="blue-underline"></div>
+                <p class="text-white text-base md:text-lg leading-relaxed mb-10">
+                    I am a 3rd-year B.Tech student in Cybersecurity at Anurag University, Uppal, Telangana. I am passionate about ethical hacking and aspire to build a career in cybersecurity. Through internships and hands-on projects, I have gained practical skills in ethical hacking, penetration testing, and network security. I am also a certified AWS Academy Graduate in Cloud Foundations, and I actively contribute to Hack The Box Anurag University as a Webmaster.
+                </p>
+                <h2 class="font-rubik text-xl md:text-2xl font-bold mb-4 text-white">Skill & Interest</h2>
+                <div class="flex flex-wrap gap-6">
+                    <span class="text-white border border-white px-6 py-2 pill-rounded text-sm font-mono tracking-widest">ETHICAL HACKING</span>
+                    <span class="text-white border border-white px-6 py-2 pill-rounded text-sm font-mono tracking-widest">CYBERSECURITY</span>
+                    <span class="text-white border border-white px-6 py-2 pill-rounded text-sm font-mono tracking-widest">LINUX</span>
+                </div>
+            </section>
+        </main>
+        <div class="bottom-line-container fade-slide-up">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </div>
+
+    <!-- Section 3: Education -->
+    <div class="section" id="section3">
+        <h1 class="year-stroke">2022 - 2026</h1>
+        <div class="content-wrapper fade-slide-up">
+            <div>
+                <div class="left">
+                    <h2>EDUCATION</h2>
+                    <div class="blue-underline"></div>
+                    <p>
+                        Pursuing a B.Tech in Cybersecurity at Anurag University, where I am developing a strong foundation in cyber forensics, counterterrorism, and ethical hacking. My coursework includes hands-on projects in network security, penetration testing, and system protection, preparing me for a career in cybersecurity.
+                    </p>
+                </div>
+                <div class="right">
+                    <div>
+                        <h3>BACHELOR OF TECHNOLOGY - BTECH</h3>
+                        <p>Cyber/Computer Forensics and Counterterrorism | May 2022 - January 2026</p>
+                    </div>
+                    <div>
+                        <h3>Anurag University | July 2023</h3>
+                        <p>Diploma in ECE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-line-container">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </div>
+
+    <!-- Section 4: Experience -->
+    <div class="section" id="section4">
+        <h1 class="year-stroke">2021 - 2026</h1>
+        <div class="content-wrapper fade-slide-up">
+            <div>
+                <div class="left">
+                    <h2>EXPERIENCE</h2>
+                    <div class="blue-underline"></div>
+                    <ul class="space-y-12">
+                        <li class="flex items-start space-x-4">
+                            <div class="mt-1 text-[#3ea9f5] text-4xl leading-none">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-white text-lg leading-tight">THE RED USERS</h3>
+                                <p class="text-white text-lg font-normal leading-snug">Intern | May 2025 - Present (2 months)</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <div class="mt-1 text-[#3ea9f5] text-4xl leading-none">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-white text-lg leading-tight">SYTECH LABS PVT. LTD</h3>
+                                <p class="text-white text-lg font-normal leading-snug">Intern | April 2025 - Present (3 months)</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <div class="mt-1 text-[#3ea9f5] text-4xl leading-none">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-white text-lg leading-tight">HACK THE BOX ANURAG UNIVERSITY (HTBAU)</h3>
+                                <p class="text-white text-lg font-normal leading-snug">Webmaster | August 2024 - Present (11 months)</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="right text-lg leading-relaxed">
+                    <p class="mb-8">Currently interning at The Red Users, focusing on cybersecurity tasks and contributing to secure system practices in India.</p>
+                    <p class="mb-8">Interning at Sytech Labs in Hyderabad, working on cybersecurity projects with a focus on ethical hacking and system security.</p>
+                    <p>Responsible for designing, developing, and maintaining the HTBAU website, ensuring a responsive and secure user experience. Managed updates, performance optimizations, and authentication systems while enhancing UI/UX for seamless navigation.</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-line-container">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </div>
+
+    <!-- Project Section -->
+    <section id="project-section" class="fade-slide-up">
+        <h1 class="title">SELECTED PROJECT</h1>
+        <h2 id="yearRange" class="year-stroke">2022 - 2026</h2>
+        <div class="underline-blue"></div>
+        <div class="projects-container">
+            <article id="project1" class="project-card">
+                <img alt="Top view of a desk with multiple devices showing best web design layouts on screens, including laptop, tablet, and smartphone, with a small plant and glasses on the side" src="https://storage.googleapis.com/a1aa/image/144a4825-4670-45a8-2867-035968296cfa.jpg" />
+                <h3>Arrowai Industries | 2022</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.</p>
+            </article>
+            <article id="project2" class="project-card">
+                <img alt="Colorful space nebula with vibrant clouds of purple, orange, yellow, and blue stars scattered in the background" src="https://storage.googleapis.com/a1aa/image/85e9b725-cdac-4784-f89a-ce827fa83823.jpg" />
+                <h3>Borcelle | 2026</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.</p>
+            </article>
+            <article id="project3" class="project-card">
+                <img alt="Person's hands using a white keyboard and mouse on a white desk with colorful interior design sketches on a computer screen" src="https://storage.googleapis.com/a1aa/image/faf1afe8-f485-4687-28fb-09cd9bf0e935.jpg" />
+                <h3>Fradel and Spies | 2026</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.</p>
+            </article>
+        </div>
+        <button id="prevBtn" class="nav-btn" aria-label="Previous project">
+            <i class="fas fa-chevron-left text-3xl"></i>
+        </button>
+        <button id="nextBtn" class="nav-btn" aria-label="Next project">
+            <i class="fas fa-chevron-right text-3xl"></i>
+        </button>
+        <div class="bottom-line-container">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </section>
+
+    <!-- Get In Touch Section -->
+    <section id="get-in-touch-section" class="section fade-slide-up mx-auto">
+        <h1 class="text-center font-rubik text-4xl md:text-5xl font-bold text-white mb-2">GET IN TOUCH</h1>
+        <p class="text-center text-[#3ea9f5] italic text-lg md:text-xl font-mono mb-16">
+            <em>Let's Work Together</em>
+        </p>
+        <div class="contact-grid">
+            <div>
+                <i class="fas fa-phone fa-3x text-[#3ea9f5]"></i>
+                <h2 class="font-rubik text-lg font-bold">Phone & Mobile</h2>
+                <p class="text-sm">+91 9248512382</p>
+                <p class="text-sm">+91 9391733704</p>
+            </div>
+            <div>
+                <i class="far fa-envelope fa-3x text-[#3ea9f5]"></i>
+                <h2 class="font-rubik text-lg font-bold">Email</h2>
+                <p class="text-sm">Spmteja09@gmail.com</p>
+                <p class="text-sm">Spmteja20@gmail.com</p>
+            </div>
+            <div>
+                <i class="fas fa-map-marker-alt fa-3x text-[#3ea9f5]"></i>
+                <h2 class="font-rubik text-lg font-bold">Address</h2>
+                <p class="text-sm">Telangana Hyderabad</p>
+            </div>
+            <div>
+                <i class="far fa-heart fa-3x text-[#3ea9f5]"></i>
+                <h2 class="font-rubik text-lg font-bold">Social Media</h2>
+                <p class="text-sm">@reallygreatsite.com</p>
+            </div>
+        </div>
+        <div class="contact-footer">
+            <div class="w-full h-[2px] border border-white rounded-full relative">
+                <span class="absolute -left-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-white rounded-full"></span>
+            </div>
+            <h2 class="font-rubik font-extrabold uppercase text-transparent" style="-webkit-text-stroke: 1px white; -webkit-text-fill-color: transparent;">
+                SINGAMSETTI POORNA MANI TEJA
+            </h2>
+            <div class="w-full h-[2px] border border-white rounded-full relative">
+                <span class="absolute -right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-white rounded-full"></span>
+            </div>
+        </div>
+        <div class="bottom-line-container mt-6">
+            <div class="line">
+                <div class="circle"></div>
+            </div>
+            <div class="text">PORTOFOLIO 2026</div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll for nav links with offset for fixed navbar
+        document.querySelectorAll('.navbar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId && targetId.startsWith('#')) {
+                    const targetElement = document.querySelector(targetId);
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const extraOffset = targetId === '#section2' ? -10 : 20;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight - extraOffset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    targetElement.classList.add('visible');
+                }
+            });
+        });
+
+        // Intersection Observer for fade/slide animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const childrenFadeUp = entry.target.querySelectorAll('.fade-slide-up');
+                    childrenFadeUp.forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 100);
+                    });
+                    const childrenFadeLeft = entry.target.querySelectorAll('.fade-slide-left');
+                    childrenFadeLeft.forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 100);
+                    });
+                    const childrenFadeRight = entry.target.querySelectorAll('.fade-slide-right');
+                    childrenFadeRight.forEach((el, i) => {
+                        setTimeout(() => el.classList.add('visible'), i * 100);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section, #project-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Project carousel logic with smooth transitions
+        const projects = [
+            {
+                title: "Arrowai Industries",
+                year: 2022,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.",
+                imgAlt: "Top view of a desk with multiple devices showing best web design layouts on screens, including laptop, tablet, and smartphone, with a small plant and glasses on the side",
+                imgSrc: "https://storage.googleapis.com/a1aa/image/144a4825-4670-45a8-2867-035968296cfa.jpg",
+            },
+            {
+                title: "Borcelle",
+                year: 2026,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.",
+                imgAlt: "Colorful space nebula with vibrant clouds of purple, orange, yellow, and blue stars scattered in the background",
+                imgSrc: "https://storage.googleapis.com/a1aa/image/85e9b725-cdac-4784-f89a-ce827fa83823.jpg",
+            },
+            {
+                title: "Fradel and Spies",
+                year: 2026,
+                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet massa sed leo molestie ultrices in non mi.",
+                imgAlt: "Person's hands using a white keyboard and mouse on a white desk with colorful interior design sketches on a computer screen",
+                imgSrc: "https://storage.googleapis.com/a1aa/image/faf1afe8-f485-4687-28fb-09cd9bf0e935.jpg",
+            },
+        ];
+
+        let currentIndex = 0;
+
+        const projectEls = [
+            document.getElementById("project1"),
+            document.getElementById("project2"),
+            document.getElementById("project3"),
+        ];
+        const yearRangeEl = document.getElementById("yearRange");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const projectsContainer = document.querySelector(".projects-container");
+
+        function updateProjects(direction) {
+            projectsContainer.style.opacity = '0';
+            projectsContainer.style.transform = direction === 'next' ? 'translateX(-20px)' : 'translateX(20px)';
+            
+            setTimeout(() => {
+                for (let i = 0; i < 3; i++) {
+                    const projIndex = (currentIndex + i) % projects.length;
+                    const proj = projects[projIndex];
+                    const el = projectEls[i];
+                    el.querySelector("img").src = proj.imgSrc;
+                    el.querySelector("img").alt = proj.imgAlt;
+                    el.querySelector("h3").textContent = `${proj.title} | ${proj.year}`;
+                    el.querySelector("p").textContent = proj.description;
+                }
+
+                const years = [];
+                for (let i = 0; i < 3; i++) {
+                    const projIndex = (currentIndex + i) % projects.length;
+                    years.push(projects[projIndex].year);
+                }
+                const minYear = Math.min(...years);
+                const maxYear = Math.max(...years);
+                const yearStr = minYear === maxYear ? `${minYear}` : `${minYear} - ${maxYear}`;
+                yearRangeEl.innerHTML = "";
+                for (const char of yearStr) {
+                    const span = document.createElement("span");
+                    span.textContent = char;
+                    span.className = "year-stroke";
+                    yearRangeEl.appendChild(span);
+                }
+
+                projectsContainer.style.opacity = '1';
+                projectsContainer.style.transform = 'translateX(0)';
+            }, 300);
+        }
+
+        prevBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+            updateProjects('prev');
+        });
+
+        nextBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % projects.length;
+            updateProjects('next');
+        });
+
+        updateProjects();
+
+        // Scroll-based background movement
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const scrollFraction = scrollPosition / maxScroll;
+            const shiftX = 20 + (scrollFraction * 20);
+            const shiftY = 20 + (scrollFraction * 20);
+            document.body.style.backgroundPosition = `${shiftX}% ${shiftY}%, ${80 - scrollFraction * 10}% ${40 + scrollFraction * 10}%, ${10 + scrollFraction * 10}% ${90 - scrollFraction * 10}%, ${90 - scrollFraction * 10}% ${90 - scrollFraction * 10}%`;
+        });
+    </script>
+</body>
+</html>
