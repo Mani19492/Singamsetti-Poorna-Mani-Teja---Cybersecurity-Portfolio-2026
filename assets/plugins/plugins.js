@@ -6213,7 +6213,7 @@ var Swiper = function() {
 	}
 
 	function se(e) {
-		return void 0 === e && (e = ""), `.${e.trim().replace(/([\.:!+\/])/g,"\\$1").replace(/ /g,".")}`
+		return void 0 === e && (e = ""), `.${e.trim().replace(/\\/g, "\\\\").replace(/([\.:!+\/])/g,"\\$1").replace(/ /g,".")}`
 	}
 
 	function ae(e) {
