@@ -3417,7 +3417,7 @@
 	}
 	var j = 'undefined' != typeof window,
 		k = Math.round(j ? window.devicePixelRatio || 1 : 1),
-		l = /(\.[A-z]{3,4}\/?(\?.*)?)$/,
+		l = /(\.[A-Za-z]{3,4}\/?(\?.*)?)$/,
 		m = /url\(('|")?([^)'"]+)('|")?\)/i,
 		n = '[data-rjs]',
 		o = 'data-rjs-processed';
